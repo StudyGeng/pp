@@ -1,54 +1,82 @@
+from tkinter import *
+from tkinter import messagebox
 
-class Time:
-    def __init__(self, seconds):
-        self.seconds = seconds
+form = Tk()
 
-    def _to_minutes(self):
-        minutes = self.seconds//60
-        seconds = self.seconds % 60
-        print(f'Seconds to Minutes: {minutes}:{seconds}')
+form.title("standard_fig")
+form.geometry("600x250")
+form.resizable(False, False)
 
-    def _to_hours(self):
-        hours = self.seconds // 3600
-        minutes = self.seconds//60
-        seconds = self.seconds % 60
-        print(f'Seconds to Hours: {hours}:{minutes}:{seconds}')
+def multiply():
+    try:
+        densityValue = int(E_density.get())
+        volumeValue = int(E_volume.get())
+        result = densityValue * volumeValue
+        E_Result.config(state='normal')
+        E_Result.delete(0, END)
+        E_Result.insert(0, str(result))
+        E_Result.config(state='readonly')
 
-seconds1 = int(input("Please Put a Seconds Value: "))
-secondsValue = Time(seconds1)
-toMinutes = secondsValue._to_minutes()
-toHours = secondsValue._to_hours()
+    except ValueError:
+        messagebox.showerror("Input Error", "ERROR: Please insert integer value!")
 
-class Product:
-    def __init__(self, name, price, amount):
-        self.name = name
-        self.amount = amount
-        self.price = price
+def Clear():
+    E_density.delete(0, END)
+    E_volume.delete(0, END)
+    E_Result.delete(0, END)
 
-    def get_price(self , quantity):
-        if quantity < 10 :
-            totalprice = quantity * self.price
-            print("\nTotal Price is:RM" , totalprice)
 
-        elif quantity >= 10 and quantity <=99 :
-            discountprice = self.price * 10/100
-            totalprice = quantity * discountprice
-            print("\nTotal Price is:RM" , totalprice)
+labelFrame = LabelFrame(form, text="Measures")
+labelFrame.place(x=10, y=10, width=350, height=170)
 
-        else:
-            discountprice = self.price * 20/100
-            totalprice = quantity * discountprice
-            print("\nTotal Price is:RM" , totalprice)
+Lbl_density = Label(labelFrame, text="Density(D) :")
+Lbl_density.place(x=40, y=5)
 
-    def make_purchase(self, quantity):
-        return self.amount - quantity
+Lbl_volume = Label(labelFrame, text="Volume(V) :")
+Lbl_volume.place(x=40, y=30)
 
-itemName = input(f'Please Enter Product Name: ')
-priceValue = int(input(f'Please Enter Item Price: '))
-amountValue = int(input(f'Stock Avalaible: '))
-quantityValue = int(input(f'Please Enter How Many Items You Bought: '))
+Lbl_result = Label(labelFrame, text="Mass(D*V) :")
+Lbl_result.place(x=40, y=70)
 
-totalpriceValue = Product(itemName, priceValue, amountValue)
-getPrice = totalpriceValue.get_price(quantityValue)
-stockLeft = totalpriceValue.make_purchase(quantityValue)
-print(f'Stock Left For {itemName} is {stockLeft}')
+#Entry Density
+E_density = Entry(labelFrame, relief="solid")
+E_density.place(x=130, y=8, width=150)
+Lbl_density1 = Label(labelFrame, text="lb/cu.in")
+Lbl_density1.place(x=290, y=8)
+
+#Entry Volume
+E_volume = Entry(labelFrame, relief="solid")
+E_volume.place(x=130, y=33, width=150)
+Lbl_density1 = Label(labelFrame, text="cu.in")
+Lbl_density1.place(x=290, y=33)
+
+#Entry Result
+E_Result = Entry(labelFrame)
+E_Result.place(x=130, y=70, width=150)
+E_Result.config(state='disable')
+Lbl_mas = Label(labelFrame, text="lb")
+Lbl_mas.place(x=290, y=70)
+
+#btn lable
+Btn_1 = Button(labelFrame,text="Calculate", command=multiply)
+Btn_1.place(x=250, y=110, width=70)
+Btn_C = Button(labelFrame,text="Reset", command=Clear)
+Btn_C.place(x=170, y=110, width=70)
+
+#Label Frame Unit
+labelFrame = LabelFrame(form, text="Units")
+labelFrame.place(x=370, y=10, width=160, height=80)
+
+#Radio Button
+radVar = IntVar()
+rad1 = Radiobutton(labelFrame, text="English Unit System", variable=radVar, value=1)
+rad1.grid(column=200, row=200)
+rad2 = Radiobutton(labelFrame, text="S.I Unit System", variable=radVar, value=2)
+rad2.grid(column=200, row=300)
+
+#Button
+Btn_add = Button(text="Calculate", command=multiply)
+Btn_add.place(x=370, y=110, width=70)
+Btn_Clear = Button(text="Reset", command=Clear)
+Btn_Clear.place(x=460, y=110, width=70)
+form.mainloop()
