@@ -1,0 +1,54 @@
+
+class Time:
+    def __init__(self, seconds):
+        self.seconds = seconds
+
+    def _to_minutes(self):
+        minutes = self.seconds//60
+        seconds = self.seconds % 60
+        print(f'Seconds to Minutes: {minutes}:{seconds}')
+
+    def _to_hours(self):
+        hours = self.seconds // 3600
+        minutes = self.seconds//60
+        seconds = self.seconds % 60
+        print(f'Seconds to Hours: {hours}:{minutes}:{seconds}')
+
+seconds1 = int(input("Please Put a Seconds Value: "))
+secondsValue = Time(seconds1)
+toMinutes = secondsValue._to_minutes()
+toHours = secondsValue._to_hours()
+
+class Product:
+    def __init__(self, name, price, amount):
+        self.name = name
+        self.amount = amount
+        self.price = price
+
+    def get_price(self , quantity):
+        if quantity < 10 :
+            totalprice = quantity * self.price
+            print("\nTotal Price is:RM" , totalprice)
+
+        elif quantity >= 10 and quantity <=99 :
+            discountprice = self.price * 10/100
+            totalprice = quantity * discountprice
+            print("\nTotal Price is:RM" , totalprice)
+
+        else:
+            discountprice = self.price * 20/100
+            totalprice = quantity * discountprice
+            print("\nTotal Price is:RM" , totalprice)
+
+    def make_purchase(self, quantity):
+        return self.amount - quantity
+
+itemName = input(f'Please Enter Product Name: ')
+priceValue = int(input(f'Please Enter Item Price: '))
+amountValue = int(input(f'Stock Avalaible: '))
+quantityValue = int(input(f'Please Enter How Many Items You Bought: '))
+
+totalpriceValue = Product(itemName, priceValue, amountValue)
+getPrice = totalpriceValue.get_price(quantityValue)
+stockLeft = totalpriceValue.make_purchase(quantityValue)
+print(f'Stock Left For {itemName} is {stockLeft}')
