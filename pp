@@ -1,0 +1,77 @@
+from tkinter import *
+from tkinter import messagebox
+
+form = Tk()
+
+form.title("standard_fig")
+form.geometry("600x150")
+form.resizable(False, False)
+
+def multiply():
+    try:
+        densityValue = int(E_density.get())
+        volumeValue = int(E_volume.get())
+        result = densityValue * volumeValue
+        E_Result.config(state='normal')
+        E_Result.delete(0, END)
+        E_Result.insert(0, str(result))
+        E_Result.config(state='readonly')
+
+    except ValueError:
+        messagebox.showerror("Input Error", "ERROR: Please insert integer value!")
+
+def Clear():
+    E_density.delete(0, END)
+    E_volume.delete(0, END)
+    E_Result.delete(0, END)
+
+
+labelFrame = LabelFrame(form, text="Measures")
+labelFrame.place(x=10, y=10, width=350, height=130)
+
+Lbl_density = Label(labelFrame, text="Density(D) :")
+Lbl_density.place(x=40, y=5)
+
+Lbl_volume = Label(labelFrame, text="Volume(V) :")
+Lbl_volume.place(x=40, y=30)
+
+Lbl_result = Label(labelFrame, text="Mass(D*V) :")
+Lbl_result.place(x=40, y=70)
+
+#Entry Density
+E_density = Entry(labelFrame, relief="solid")
+E_density.place(x=130, y=8, width=150)
+Lbl_density1 = Label(labelFrame, text="lb/cu.in")
+Lbl_density1.place(x=290, y=8)
+
+#Entry Volume
+E_volume = Entry(labelFrame, relief="solid")
+E_volume.place(x=130, y=33, width=150)
+Lbl_density1 = Label(labelFrame, text="cu.in")
+Lbl_density1.place(x=290, y=33)
+
+#Entry Result
+E_Result = Entry(labelFrame)
+E_Result.place(x=130, y=70, width=150)
+E_Result.config(state='disable')
+Lbl_mas = Label(labelFrame, text="lb")
+Lbl_mas.place(x=290, y=70)
+
+
+#Label Frame Unit
+labelFrame = LabelFrame(form, text="Units")
+labelFrame.place(x=370, y=10, width=160, height=80)
+
+#Radio Button
+radVar = IntVar()
+rad1 = Radiobutton(labelFrame, text="English Unit System", variable=radVar, value=1)
+rad1.grid(column=200, row=200)
+rad2 = Radiobutton(labelFrame, text="S.I Unit System", variable=radVar, value=2)
+rad2.grid(column=200, row=300)
+
+#Button
+Btn_add = Button(text="Calculate", command=multiply)
+Btn_add.place(x=370, y=110, width=70)
+Btn_Clear = Button(text="Reset", command=Clear)
+Btn_Clear.place(x=460, y=110, width=70)
+form.mainloop()
