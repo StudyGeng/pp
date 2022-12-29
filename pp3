@@ -1,0 +1,19 @@
+class Time:
+    def _init_(self, seconds):
+        self.seconds = seconds
+
+    def _to_minutes(self):
+        minutes = self.seconds//60
+        seconds = self.seconds % 60
+        print(f'Seconds to Minutes: {minutes}:{seconds}')
+
+    def _to_hours(self):
+        hours = self.seconds // 3600
+        minutes = self.seconds//60
+        seconds = self.seconds % 60
+        print(f'Seconds to Hours: {hours}:{minutes}:{seconds}')
+
+seconds1 = int(input("Please Put a Seconds Value: "))
+secondsValue = Time(seconds1)
+toMinutes = secondsValue._to_minutes()
+toHours = secondsValue._to_hours()
